@@ -24,6 +24,38 @@ L_CFLAGS += -DVERSION_STR_POSTFIX=\"-$(PLATFORM_VERSION)\"
 # Set Android log name
 L_CFLAGS += -DANDROID_LOG_NAME=\"wpa_supplicant\"
 
+
+# sw define: nano sdio wifi module
+ifeq ($(SW_BOARD_USR_WIFI), nanowifi)
+L_CFLAGS += -DNO_COMBOSCAN_CMD_WIFI_DRIVER
+endif
+
+# sw define: ralink usb wifi module
+ifeq ($(SW_BOARD_USR_WIFI), rt5370)
+L_CFLAGS += -DNO_COMBOSCAN_CMD_WIFI_DRIVER
+endif
+
+# sw define: bcm40181 sdio wifi module
+ifeq ($(SW_BOARD_USR_WIFI), bcm40181)
+L_CFLAGS += -DNO_COMBOSCAN_CMD_WIFI_DRIVER
+endif
+
+# sw define: bcm40183 wifi+bt module
+ifeq ($(SW_BOARD_USR_WIFI), bcm40183)
+L_CFLAGS += -DNO_COMBOSCAN_CMD_WIFI_DRIVER
+endif
+
+# sw define: rtl8192cu/rtl8189es/rtl8188eu/rtl8723as
+ifeq ($(BOARD_WIFI_VENDOR), realtek)
+L_CFLAGS += -DRTL_WIFI_VENDOR
+endif
+
+# sw define: default use 256bit PSK instead of origin code(8-32char)
+ifeq ($(SW_WPA_SUPPLICANT_PSK_CLEAR),)
+L_CFLAGS += -DCONFIG_ANDROID_PSK_ENCREPTION
+endif
+
+
 # Disable roaming in wpa_supplicant
 ifdef CONFIG_NO_ROAMING
 L_CFLAGS += -DCONFIG_NO_ROAMING

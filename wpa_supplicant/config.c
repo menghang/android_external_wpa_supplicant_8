@@ -400,10 +400,12 @@ static int wpa_config_parse_psk(const struct parse_data *data,
 static char * wpa_config_write_psk(const struct parse_data *data,
 				   struct wpa_ssid *ssid)
 {
+#ifndef CONFIG_ANDROID_PSK_ENCREPTION
 	if (ssid->passphrase)
 		return wpa_config_write_string_ascii(
 			(const u8 *) ssid->passphrase,
 			os_strlen(ssid->passphrase));
+#endif
 
 	if (ssid->psk_set)
 		return wpa_config_write_string_hex(ssid->psk, PMK_LEN);
