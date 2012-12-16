@@ -1576,7 +1576,11 @@ static int wpa_driver_wext_get_range(void *priv)
 			WPA_DRIVER_AUTH_SHARED |
 			WPA_DRIVER_AUTH_LEAP;
 #ifdef ANDROID
+		#if defined(NO_COMBOSCAN_CMD_WIFI_DRIVER)
+		drv->capa.max_scan_ssids = 1; //patch for wext by sw @2012-7-14 14:01:58
+		#else
 		drv->capa.max_scan_ssids = WEXT_CSCAN_AMOUNT;
+		#endif
 #else
 		drv->capa.max_scan_ssids = 1;
 #endif
